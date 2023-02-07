@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "preetinder_singh",
+    "password": null,
+    "database": "preetinder_singh",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "preetinder_singh",
+    "password": null,
+    "database": "preetinder_singh",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
