@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const TOKEN_SECRET = `${process.env.TOKEN_SECRET}`;
+// const TOKEN_SECRET = `${process.env.TOKEN_SECRET}`;
 const {User} = require('../../database/models');
 
 const addUser = async (username, password) => {
@@ -29,7 +29,7 @@ const loginUser = async(username, password) => {
         throw new Error('Invalid password');
     }
 
-    const token = jwt.sign(username, TOKEN_SECRET);
+    const token = jwt.sign(username, process.env.TOKEN_SECRET);
 
     return token;    
 };
