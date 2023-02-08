@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const userRouter = require('./src/routers/user');
+const userRouter = require('./src/routers/auth');
 
 app.use(express.json());
 app.use('/', userRouter);
