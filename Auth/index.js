@@ -1,9 +1,9 @@
 const express = require('express');
 
 const app = express();
-const port = (process.env.PORT || 3000);
+const port = 3000;
 
-const userRouter = require('./routers/user');
+const userRouter = require('./src/routers/user');
 
 app.use(express.json());
 app.use('/', userRouter);
