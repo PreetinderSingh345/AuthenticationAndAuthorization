@@ -4,13 +4,15 @@
     "password": null,
     "database": "preetinder_singh",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "port": 5433
   },
   "test": {
     "username": "preetinder_singh",
     "password": null,
     "database": "preetinder_singh",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "port": 5433
   }
 }
