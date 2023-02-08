@@ -13,4 +13,16 @@ const addUser = async (req, res) => {
     }
 };
 
-module.exports = {addUser};
+const loginUser = async (req, res) => {
+  try {
+    const {username, password} = req.body;
+
+    const token = await userServices.loginUser(username, password);
+
+    res.status(200).json(token);
+  } catch(error) {
+    res.status(500).json(error.message);
+  }
+};
+
+module.exports = {addUser, loginUser};
