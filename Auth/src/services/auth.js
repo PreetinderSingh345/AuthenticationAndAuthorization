@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-// const TOKEN_SECRET = `${process.env.TOKEN_SECRET}`;
-const {User} = require('../../database/models');
+const { User } = require('../../database/models');
+const { insertInRedis } = require('../utils/redis');
 
 const addUser = async (username, password) => {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -14,9 +14,9 @@ const addUser = async (username, password) => {
     return user;
 };
 
-const loginUser = async(username, password) => {
+const loginUser = async (username, password) => {
     const user = await User.findOne({
-        where : {
+        where: {
             username
         }
     });
@@ -25,13 +25,15 @@ const loginUser = async(username, password) => {
 
     const isPasswordValid = await bcrypt.compare(password, hashedPassword);
 
-    if(!isPasswordValid) {
+    if (!isPasswordValid) {
         throw new Error('Invalid password');
     }
 
     const token = jwt.sign(username, process.env.TOKEN_SECRET);
 
-    return token;    
+    await insertInRedis(token);
+
+    return token;
 };
 
-module.exports = {addUser, loginUser};
+module.exports = { addUser, loginUser };
