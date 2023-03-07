@@ -1,39 +1,39 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { User } = require('../../database/models');
-const { insertInRedis } = require('../utils/redis');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { User } = require("../../database/models");
+const { insertInRedis } = require("../utils/redis");
 
 const addUser = async (username, password) => {
-    const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({
-        username,
-        password: hashedPassword
-    });
+  const user = await User.create({
+    username,
+    password: hashedPassword,
+  });
 
-    return user;
+  return user;
 };
 
 const loginUser = async (username, password) => {
-    const user = await User.findOne({
-        where: {
-            username
-        }
-    });
+  const user = await User.findOne({
+    where: {
+      username,
+    },
+  });
 
-    const hashedPassword = user.password;
+  const hashedPassword = user.password;
 
-    const isPasswordValid = await bcrypt.compare(password, hashedPassword);
+  const isPasswordValid = await bcrypt.compare(password, hashedPassword);
 
-    if (!isPasswordValid) {
-        throw new Error('Invalid password');
-    }
+  if (!isPasswordValid) {
+    throw new Error("Invalid password");
+  }
 
-    const token = jwt.sign(username, process.env.TOKEN_SECRET);
+  const token = jwt.sign(username, process.env.TOKEN_SECRET);
 
-    await insertInRedis(token);
+  await insertInRedis(token);
 
-    return token;
+  return token;
 };
 
 module.exports = { addUser, loginUser };
